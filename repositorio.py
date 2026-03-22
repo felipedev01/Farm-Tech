@@ -2,7 +2,8 @@ import json
 import os
 from pathlib import Path
 
-VERSAO_ARQUIVO = 1
+VERSAO_ARQUIVO = 2
+VERSOES_SUPORTADAS = {1, 2}
 PASTA_DADOS = Path(__file__).resolve().parent / "data"
 ARQUIVO_REGISTROS = PASTA_DADOS / "registros.json"
 ARQUIVO_TEMPORARIO = ARQUIVO_REGISTROS.with_suffix(".json.tmp")
@@ -18,6 +19,52 @@ areas_totais: list[float] = []
 quantidade_ruas: list[int] = []
 comprimento_total_ruas: list[float] = []
 area_por_metro_rua: list[float] = []
+insumos_registros: list[list[dict]] = []
+
+
+def _normalizar_insumos(insumos: list[dict] | None) -> list[dict]:
+    if insumos is None:
+        return []
+    if not isinstance(insumos, list):
+        raise ValueError("registro com tipo invalido para insumos")
+
+    insumos_normalizados: list[dict] = []
+    campos_obrigatorios = {"nome", "dose_por_metro", "unidade", "consumo_total"}
+    for item in insumos:
+        if not isinstance(item, dict):
+            raise ValueError("insumo com formato invalido")
+        if campos_obrigatorios - set(item.keys()):
+            raise ValueError("insumo com campos ausentes")
+        if not isinstance(item["nome"], str) or not isinstance(item["unidade"], str):
+            raise ValueError("insumo com tipo invalido para nome ou unidade")
+        dose = item["dose_por_metro"]
+        consumo = item["consumo_total"]
+        if isinstance(dose, bool) or not isinstance(dose, (int, float)):
+            raise ValueError("insumo com tipo invalido para dose_por_metro")
+        if isinstance(consumo, bool) or not isinstance(consumo, (int, float)):
+            raise ValueError("insumo com tipo invalido para consumo_total")
+
+        insumos_normalizados.append(
+            {
+                "nome": item["nome"],
+                "dose_por_metro": float(dose),
+                "unidade": item["unidade"],
+                "consumo_total": float(consumo),
+            }
+        )
+    return insumos_normalizados
+
+
+def _copiar_insumos(insumos: list[dict]) -> list[dict]:
+    return [
+        {
+            "nome": item["nome"],
+            "dose_por_metro": float(item["dose_por_metro"]),
+            "unidade": item["unidade"],
+            "consumo_total": float(item["consumo_total"]),
+        }
+        for item in insumos
+    ]
 
 
 def _limpar_vetores() -> None:
@@ -31,9 +78,10 @@ def _limpar_vetores() -> None:
     quantidade_ruas.clear()
     comprimento_total_ruas.clear()
     area_por_metro_rua.clear()
+    insumos_registros.clear()
 
 
-def _validar_e_hidratar_registros(registros: list[dict]) -> None:
+def _validar_e_hidratar_registros(registros: list[dict], versao_payload: int) -> None:
     _limpar_vetores()
 
     campos_obrigatorios = {
@@ -73,6 +121,10 @@ def _validar_e_hidratar_registros(registros: list[dict]) -> None:
         quantidade_ruas.append(qtd_ruas)
         comprimento_total_ruas.append(float(item["comprimento_total_ruas"]))
         area_por_metro_rua.append(float(item["area_por_metro_rua"]))
+        if versao_payload == 1:
+            insumos_registros.append([])
+        else:
+            insumos_registros.append(_normalizar_insumos(item.get("insumos")))
 
 
 def _serializar_registros() -> list[dict]:
@@ -104,14 +156,15 @@ def inicializar_repositorio() -> None:
         if not isinstance(payload, dict):
             raise ValueError("estrutura raiz invalida")
 
-        if payload.get("version") != VERSAO_ARQUIVO:
+        versao_payload = payload.get("version")
+        if versao_payload not in VERSOES_SUPORTADAS:
             raise ValueError("versao do arquivo nao suportada")
 
         registros = payload.get("registros")
         if not isinstance(registros, list):
             raise ValueError("lista de registros invalida")
 
-        _validar_e_hidratar_registros(registros)
+        _validar_e_hidratar_registros(registros, versao_payload)
     except (OSError, json.JSONDecodeError, ValueError, TypeError) as exc:
         _limpar_vetores()
         print(f"Aviso: arquivo de dados invalido. Iniciando com base vazia ({exc}).")
@@ -136,6 +189,7 @@ def adicionar_registro(
     qtd_ruas: int,
     comp_total_ruas: float,
     area_metro_rua: float,
+    insumos_registro: list[dict] | None = None,
 ) -> None:
     culturas.append(cultura)
     formas.append(forma)
@@ -147,6 +201,7 @@ def adicionar_registro(
     quantidade_ruas.append(qtd_ruas)
     comprimento_total_ruas.append(comp_total_ruas)
     area_por_metro_rua.append(area_metro_rua)
+    insumos_registros.append(_normalizar_insumos(insumos_registro))
     _persistir_registros()
 
 
@@ -165,6 +220,7 @@ def obter_registro(indice: int) -> dict:
         "quantidade_ruas": quantidade_ruas[indice],
         "comprimento_total_ruas": comprimento_total_ruas[indice],
         "area_por_metro_rua": area_por_metro_rua[indice],
+        "insumos": _copiar_insumos(insumos_registros[indice]),
     }
 
 
@@ -184,6 +240,7 @@ def atualizar_registro(
     qtd_ruas: int,
     comp_total_ruas: float,
     area_metro_rua: float,
+    insumos_registro: list[dict] | None = None,
 ) -> None:
     if not indice_valido(indice):
         raise IndexError("indice fora do intervalo existente")
@@ -198,6 +255,15 @@ def atualizar_registro(
     quantidade_ruas[indice] = qtd_ruas
     comprimento_total_ruas[indice] = comp_total_ruas
     area_por_metro_rua[indice] = area_metro_rua
+    insumos_registros[indice] = _normalizar_insumos(insumos_registro)
+    _persistir_registros()
+
+
+def setar_insumos_registro(indice: int, insumos: list[dict]) -> None:
+    if not indice_valido(indice):
+        raise IndexError("indice fora do intervalo existente")
+
+    insumos_registros[indice] = _normalizar_insumos(insumos)
     _persistir_registros()
 
 
@@ -215,4 +281,5 @@ def remover_registro(indice: int) -> None:
     quantidade_ruas.pop(indice)
     comprimento_total_ruas.pop(indice)
     area_por_metro_rua.pop(indice)
+    insumos_registros.pop(indice)
     _persistir_registros()

@@ -1,12 +1,13 @@
-﻿import unicodedata
+import unicodedata
 
-from calculos import calcular_metricas
+from calculos import calcular_insumos_por_cultura, calcular_metricas
 from repositorio import (
     adicionar_registro,
     atualizar_registro,
     indice_valido,
     listar_registros,
     remover_registro,
+    setar_insumos_registro,
     total_registros,
 )
 
@@ -40,6 +41,17 @@ def ler_opcao_menu() -> int:
         if opcao in {"1", "2", "3", "4", "5"}:
             return int(opcao)
         print("Erro: opcao invalida. Digite um numero de 1 a 5.")
+
+
+def ler_opcao_fluxo_insumos() -> int:
+    while True:
+        print("\nDeseja calcular o consumo de insumos deste registro?")
+        print("1. Calcular consumo de insumos")
+        print("2. Finalizar e voltar ao menu principal")
+        opcao = input("Escolha uma opcao (1-2): ").strip()
+        if opcao in {"1", "2"}:
+            return int(opcao)
+        print("Erro: opcao invalida. Digite 1 ou 2.")
 
 
 def ler_cultura() -> str:
@@ -86,7 +98,7 @@ def coletar_entrada() -> tuple[str, str, float, float, float, float]:
     return cultura, forma, dim_a, dim_b, largura_rua, espacamento
 
 
-def entrada_dados() -> None:
+def entrada_dados() -> int:
     cultura, forma, dim_a, dim_b, largura_rua, espacamento = coletar_entrada()
     area_total, qtd_ruas, comp_total_ruas, area_metro_rua = calcular_metricas(
         forma, dim_a, dim_b, largura_rua, espacamento
@@ -104,6 +116,7 @@ def entrada_dados() -> None:
         area_metro_rua,
     )
     print("Registro adicionado com sucesso.")
+    return total_registros() - 1
 
 
 def formatar_float_ptbr(valor: float) -> str:
@@ -127,6 +140,31 @@ def exibir_dimensoes(registro: dict) -> str:
 
 def linha_campo(rotulo: str, valor: str, largura_rotulo: int = 28) -> str:
     return f"  {rotulo.ljust(largura_rotulo, '.')} {valor}"
+
+
+def formatar_dose_por_metro(dose: float, unidade: str) -> str:
+    return f"{formatar_float_ptbr(dose)} {unidade}/m"
+
+
+def formatar_consumo_total(consumo: float, unidade: str) -> str:
+    return f"{formatar_float_ptbr(consumo)} {unidade}"
+
+
+def exibir_insumos(registro: dict) -> None:
+    insumos = registro.get("insumos", [])
+    print("Insumos")
+    print()
+    if not insumos:
+        print("  Insumos: nao calculados")
+        print()
+        return
+
+    for insumo in insumos:
+        nome = insumo["nome"]
+        dose = formatar_dose_por_metro(insumo["dose_por_metro"], insumo["unidade"])
+        consumo = formatar_consumo_total(insumo["consumo_total"], insumo["unidade"])
+        print(linha_campo(nome, f"dose {dose} | total {consumo}", largura_rotulo=36))
+    print()
 
 
 def exibir_registro(indice: int, registro: dict, unidade_area: str) -> None:
@@ -175,6 +213,8 @@ def exibir_registro(indice: int, registro: dict, unidade_area: str) -> None:
         )
     )
     print()
+    exibir_insumos(registro)
+
 
 def saida_dados(somente_ultimo: bool = False, pausar_ao_final: bool = False) -> None:
     registros = listar_registros()
@@ -195,6 +235,29 @@ def saida_dados(somente_ultimo: bool = False, pausar_ao_final: bool = False) -> 
 
     if pausar_ao_final:
         input("Aperte Enter para continuar...")
+
+
+def calcular_e_salvar_insumos(indice_registro: int) -> None:
+    registros = listar_registros()
+    if not (0 <= indice_registro < len(registros)):
+        print("Erro: registro nao encontrado para calculo de insumos.")
+        return
+
+    registro = registros[indice_registro]
+    insumos = calcular_insumos_por_cultura(
+        registro["cultura"],
+        registro["comprimento_total_ruas"],
+        registro["espacamento"],
+    )
+    setar_insumos_registro(indice_registro, insumos)
+    print("Insumos calculados e salvos com sucesso.")
+
+
+def fluxo_pos_calculo(indice_registro: int) -> None:
+    opcao = ler_opcao_fluxo_insumos()
+    if opcao == 1:
+        calcular_e_salvar_insumos(indice_registro)
+        saida_dados(somente_ultimo=True, pausar_ao_final=True)
 
 
 def ler_indice_valido() -> int | None:
@@ -265,8 +328,9 @@ def loop_menu_principal() -> None:
         opcao = ler_opcao_menu()
 
         if opcao == 1:
-            entrada_dados()
-            saida_dados(somente_ultimo=True, pausar_ao_final=True)
+            indice_novo = entrada_dados()
+            saida_dados(somente_ultimo=True, pausar_ao_final=False)
+            fluxo_pos_calculo(indice_novo)
         elif opcao == 2:
             saida_dados(pausar_ao_final=True)
         elif opcao == 3:
