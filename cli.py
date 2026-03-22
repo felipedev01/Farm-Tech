@@ -237,6 +237,24 @@ def saida_dados(somente_ultimo: bool = False, pausar_ao_final: bool = False) -> 
         input("Aperte Enter para continuar...")
 
 
+def saida_insumos_por_indice(
+    indice_registro: int, pausar_ao_final: bool = False
+) -> None:
+    registros = listar_registros()
+    if not (0 <= indice_registro < len(registros)):
+        print("Erro: registro nao encontrado para exibicao de insumos.")
+        if pausar_ao_final:
+            input("Aperte Enter para continuar...")
+        return
+
+    print("\n=== Insumos Calculados ===")
+    print(f"Registro #{indice_registro}")
+    exibir_insumos(registros[indice_registro])
+
+    if pausar_ao_final:
+        input("Aperte Enter para continuar...")
+
+
 def calcular_e_salvar_insumos(indice_registro: int) -> None:
     registros = listar_registros()
     if not (0 <= indice_registro < len(registros)):
@@ -247,7 +265,7 @@ def calcular_e_salvar_insumos(indice_registro: int) -> None:
     insumos = calcular_insumos_por_cultura(
         registro["cultura"],
         registro["comprimento_total_ruas"],
-        registro["espacamento"],
+        registro["area_por_metro_rua"],
     )
     setar_insumos_registro(indice_registro, insumos)
     print("Insumos calculados e salvos com sucesso.")
@@ -257,7 +275,7 @@ def fluxo_pos_calculo(indice_registro: int) -> None:
     opcao = ler_opcao_fluxo_insumos()
     if opcao == 1:
         calcular_e_salvar_insumos(indice_registro)
-        saida_dados(somente_ultimo=True, pausar_ao_final=True)
+        saida_insumos_por_indice(indice_registro, pausar_ao_final=True)
 
 
 def ler_indice_valido() -> int | None:

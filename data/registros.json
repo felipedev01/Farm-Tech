@@ -3,33 +3,33 @@
   "registros": [
     {
       "cultura": "milho",
-      "forma": "circulo",
-      "dimensao_a": 200.0,
-      "dimensao_b": 0.0,
-      "largura_rua": 3.0,
+      "forma": "retangulo",
+      "dimensao_a": 500.0,
+      "dimensao_b": 300.0,
+      "largura_rua": 5.0,
       "espacamento": 1.0,
-      "area_total": 21615.926535897932,
+      "area_total": 125500.0,
       "quantidade_ruas": 50,
-      "comprimento_total_ruas": 10000.0,
-      "area_por_metro_rua": 3.0,
+      "comprimento_total_ruas": 25000.0,
+      "area_por_metro_rua": 5.0,
       "insumos": [
         {
           "nome": "Semente de milho hibrido",
-          "dose_por_metro": 5.5,
+          "dose_por_metro": 27.5,
           "unidade": "sementes",
-          "consumo_total": 55000.0
+          "consumo_total": 687500.0
         },
         {
           "nome": "Fertilizante NPK 04-14-08",
-          "dose_por_metro": 0.045,
+          "dose_por_metro": 0.22499999999999998,
           "unidade": "kg",
-          "consumo_total": 450.0
+          "consumo_total": 5624.999999999999
         },
         {
           "nome": "Ureia (cobertura)",
-          "dose_por_metro": 0.0125,
+          "dose_por_metro": 0.0625,
           "unidade": "kg",
-          "consumo_total": 125.0
+          "consumo_total": 1562.5
         }
       ]
     }

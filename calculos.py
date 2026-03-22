@@ -33,8 +33,13 @@ def calcular_metricas(
 
 
 def _insumo(
-    nome: str, dose_por_metro: float, unidade: str, comprimento_total_ruas: float
+    nome: str,
+    dose_por_m2: float,
+    unidade: str,
+    area_por_metro_rua: float,
+    comprimento_total_ruas: float,
 ) -> dict:
+    dose_por_metro = dose_por_m2 * area_por_metro_rua
     return {
         "nome": nome,
         "dose_por_metro": dose_por_metro,
@@ -44,26 +49,66 @@ def _insumo(
 
 
 def calcular_insumos_por_cultura(
-    cultura: str, comprimento_total_ruas: float, espacamento: float
+    cultura: str, comprimento_total_ruas: float, area_por_metro_rua: float
 ) -> list[dict]:
     cultura_normalizada = cultura.strip().lower()
 
     if cultura_normalizada == "milho":
-        # Conversao kg/ha -> kg/m: dose_linear = dose_ha * espacamento / 10000
-        dose_npk = 450.0 * espacamento / 10000.0
-        dose_ureia = 125.0 * espacamento / 10000.0
+        # Doses-base em m2.
+        dose_semente_m2 = 5.5
+        dose_npk_m2 = 450.0 / 10000.0
+        dose_ureia_m2 = 125.0 / 10000.0
         return [
-            _insumo("Semente de milho hibrido", 5.5, "sementes", comprimento_total_ruas),
-            _insumo("Fertilizante NPK 04-14-08", dose_npk, "kg", comprimento_total_ruas),
-            _insumo("Ureia (cobertura)", dose_ureia, "kg", comprimento_total_ruas),
+            _insumo(
+                "Semente de milho hibrido",
+                dose_semente_m2,
+                "sementes",
+                area_por_metro_rua,
+                comprimento_total_ruas,
+            ),
+            _insumo(
+                "Fertilizante NPK 04-14-08",
+                dose_npk_m2,
+                "kg",
+                area_por_metro_rua,
+                comprimento_total_ruas,
+            ),
+            _insumo(
+                "Ureia (cobertura)",
+                dose_ureia_m2,
+                "kg",
+                area_por_metro_rua,
+                comprimento_total_ruas,
+            ),
         ]
 
     if cultura_normalizada == "cafe":
-        # Doses de referencia por metro linear para manejo didatico.
+        # Doses de referencia por m2 para manejo didatico.
+        dose_ureia_m2 = 8.9
+        dose_zinco_m2 = 3.0
+        dose_manganes_m2 = 5.0
         return [
-            _insumo("Ureia (pos-plantio)", 8.9, "g", comprimento_total_ruas),
-            _insumo("Sulfato de zinco (foliar)", 3.0, "g", comprimento_total_ruas),
-            _insumo("Sulfato de manganes (foliar)", 5.0, "g", comprimento_total_ruas),
+            _insumo(
+                "Ureia (pos-plantio)",
+                dose_ureia_m2,
+                "g",
+                area_por_metro_rua,
+                comprimento_total_ruas,
+            ),
+            _insumo(
+                "Sulfato de zinco (foliar)",
+                dose_zinco_m2,
+                "g",
+                area_por_metro_rua,
+                comprimento_total_ruas,
+            ),
+            _insumo(
+                "Sulfato de manganes (foliar)",
+                dose_manganes_m2,
+                "g",
+                area_por_metro_rua,
+                comprimento_total_ruas,
+            ),
         ]
 
     raise ValueError("cultura nao suportada para calculo de insumos")
