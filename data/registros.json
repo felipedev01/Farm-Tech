@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "registros": [
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 100.0,
+      "dimensao_b": 100.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 5200.0,
+      "quantidade_ruas": 25,
+      "comprimento_total_ruas": 2500.0,
+      "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "cafe",
+      "forma": "circulo",
+      "dimensao_a": 50.0,
+      "dimensao_b": 0.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 763.4954084936207,
+      "quantidade_ruas": 13,
+      "comprimento_total_ruas": 650.0,
+      "area_por_metro_rua": 2.0
+    }
+  ]
+}
