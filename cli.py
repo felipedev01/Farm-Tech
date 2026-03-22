@@ -106,27 +106,75 @@ def entrada_dados() -> None:
     print("Registro adicionado com sucesso.")
 
 
+def formatar_float_ptbr(valor: float) -> str:
+    texto = f"{valor:,.2f}"
+    return texto.replace(",", "_").replace(".", ",").replace("_", ".")
+
+
+def formatar_int_ptbr(valor: int) -> str:
+    texto = f"{valor:,d}"
+    return texto.replace(",", ".")
+
+
 def exibir_dimensoes(registro: dict) -> str:
     if registro["forma"] == "retangulo":
         return (
-            f"comprimento={registro['dimensao_a']:.2f} m, "
-            f"largura={registro['dimensao_b']:.2f} m"
+            f"{formatar_float_ptbr(registro['dimensao_a'])} m x "
+            f"{formatar_float_ptbr(registro['dimensao_b'])} m"
         )
-    return f"diametro={registro['dimensao_a']:.2f} m"
+    return f"diametro {formatar_float_ptbr(registro['dimensao_a'])} m"
+
+
+def linha_campo(rotulo: str, valor: str, largura_rotulo: int = 28) -> str:
+    return f"  {rotulo.ljust(largura_rotulo, '.')} {valor}"
 
 
 def exibir_registro(indice: int, registro: dict, unidade_area: str) -> None:
-    print(f"\nIndice: {indice}")
-    print(f"Cultura: {registro['cultura']}")
-    print(f"Forma: {registro['forma']}")
-    print(f"Dimensoes: {exibir_dimensoes(registro)}")
-    print(f"largura_rua: {registro['largura_rua']:.2f} m")
-    print(f"espacamento: {registro['espacamento']:.2f} m")
-    print(f"Area total de plantio: {registro['area_total']:.2f} {unidade_area}")
-    print(f"Quantidade de ruas: {registro['quantidade_ruas']}")
-    print(f"Comprimento total das ruas: {registro['comprimento_total_ruas']:.2f} m")
-    print(f"Area por metro de rua: {registro['area_por_metro_rua']:.2f} {unidade_area}/m")
-
+    print("\n----------------------------------------")
+    print(f"Registro #{indice}")
+    print("----------------------------------------")
+    print("Dados de Entrada")
+    print(linha_campo("Cultura", registro["cultura"]))
+    print(linha_campo("Forma", registro["forma"]))
+    print(linha_campo("Dimensoes", exibir_dimensoes(registro)))
+    print(
+        linha_campo(
+            "Largura da rua", f"{formatar_float_ptbr(registro['largura_rua'])} m"
+        )
+    )
+    print(
+        linha_campo(
+            "Espacamento entre ruas",
+            f"{formatar_float_ptbr(registro['espacamento'])} m",
+        )
+    )
+    print()
+    print("Metricas de Plantio")
+    print()
+    print(
+        linha_campo(
+            "Area total de plantio",
+            f"{formatar_float_ptbr(registro['area_total'])} {unidade_area}",
+        )
+    )
+    print(
+        linha_campo(
+            "Quantidade de ruas", formatar_int_ptbr(registro["quantidade_ruas"])
+        )
+    )
+    print(
+        linha_campo(
+            "Comprimento total das ruas",
+            f"{formatar_float_ptbr(registro['comprimento_total_ruas'])} m",
+        )
+    )
+    print(
+        linha_campo(
+            "Area por metro de rua",
+            f"{formatar_float_ptbr(registro['area_por_metro_rua'])} {unidade_area}/m",
+        )
+    )
+    print()
 
 def saida_dados(somente_ultimo: bool = False, pausar_ao_final: bool = False) -> None:
     registros = listar_registros()

@@ -24,6 +24,90 @@
       "quantidade_ruas": 13,
       "comprimento_total_ruas": 650.0,
       "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 100.0,
+      "dimensao_b": 200.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 10200.0,
+      "quantidade_ruas": 50,
+      "comprimento_total_ruas": 5000.0,
+      "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 100.0,
+      "dimensao_b": 200.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 10200.0,
+      "quantidade_ruas": 50,
+      "comprimento_total_ruas": 5000.0,
+      "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 200.0,
+      "dimensao_b": 100.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 10400.0,
+      "quantidade_ruas": 25,
+      "comprimento_total_ruas": 5000.0,
+      "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 100.0,
+      "dimensao_b": 100.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 5200.0,
+      "quantidade_ruas": 25,
+      "comprimento_total_ruas": 2500.0,
+      "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 100.0,
+      "dimensao_b": 100.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 5200.0,
+      "quantidade_ruas": 25,
+      "comprimento_total_ruas": 2500.0,
+      "area_por_metro_rua": 2.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 200.0,
+      "dimensao_b": 300.0,
+      "largura_rua": 4.0,
+      "espacamento": 1.0,
+      "area_total": 48200.0,
+      "quantidade_ruas": 60,
+      "comprimento_total_ruas": 12000.0,
+      "area_por_metro_rua": 4.0
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 200.0,
+      "dimensao_b": 500.0,
+      "largura_rua": 2.0,
+      "espacamento": 1.0,
+      "area_total": 66800.0,
+      "quantidade_ruas": 167,
+      "comprimento_total_ruas": 33400.0,
+      "area_por_metro_rua": 2.0
     }
   ]
 }
