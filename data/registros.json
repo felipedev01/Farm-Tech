@@ -6,30 +6,107 @@
       "forma": "retangulo",
       "dimensao_a": 500.0,
       "dimensao_b": 300.0,
-      "largura_rua": 5.0,
+      "largura_rua": 3.0,
       "espacamento": 1.0,
-      "area_total": 125500.0,
-      "quantidade_ruas": 50,
-      "comprimento_total_ruas": 25000.0,
+      "area_total": 113000.0,
+      "quantidade_ruas": 75,
+      "comprimento_total_ruas": 37500.0,
+      "area_por_metro_rua": 3.0,
+      "insumos": []
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 450.0,
+      "dimensao_b": 200.0,
+      "largura_rua": 4.0,
+      "espacamento": 1.0,
+      "area_total": 72450.0,
+      "quantidade_ruas": 40,
+      "comprimento_total_ruas": 18000.0,
+      "area_por_metro_rua": 4.0,
+      "insumos": [
+        {
+          "nome": "Semente de milho hibrido",
+          "dose_por_metro": 22.0,
+          "unidade": "sementes",
+          "consumo_total": 396000.0
+        },
+        {
+          "nome": "Fertilizante NPK 04-14-08",
+          "dose_por_metro": 0.18,
+          "unidade": "kg",
+          "consumo_total": 3240.0
+        },
+        {
+          "nome": "Ureia (cobertura)",
+          "dose_por_metro": 0.05,
+          "unidade": "kg",
+          "consumo_total": 900.0
+        }
+      ]
+    },
+    {
+      "cultura": "cafe",
+      "forma": "retangulo",
+      "dimensao_a": 450.0,
+      "dimensao_b": 300.0,
+      "largura_rua": 2.0,
+      "espacamento": 2.0,
+      "area_total": 68400.0,
+      "quantidade_ruas": 75,
+      "comprimento_total_ruas": 33750.0,
+      "area_por_metro_rua": 2.0,
+      "insumos": [
+        {
+          "nome": "Ureia (pos-plantio)",
+          "dose_por_metro": 17.8,
+          "unidade": "g",
+          "consumo_total": 600750.0
+        },
+        {
+          "nome": "Sulfato de zinco (foliar)",
+          "dose_por_metro": 6.0,
+          "unidade": "g",
+          "consumo_total": 202500.0
+        },
+        {
+          "nome": "Sulfato de manganes (foliar)",
+          "dose_por_metro": 10.0,
+          "unidade": "g",
+          "consumo_total": 337500.0
+        }
+      ]
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 788.0,
+      "dimensao_b": 455.0,
+      "largura_rua": 5.0,
+      "espacamento": 3.0,
+      "area_total": 226156.0,
+      "quantidade_ruas": 57,
+      "comprimento_total_ruas": 44916.0,
       "area_por_metro_rua": 5.0,
       "insumos": [
         {
           "nome": "Semente de milho hibrido",
           "dose_por_metro": 27.5,
           "unidade": "sementes",
-          "consumo_total": 687500.0
+          "consumo_total": 1235190.0
         },
         {
           "nome": "Fertilizante NPK 04-14-08",
           "dose_por_metro": 0.22499999999999998,
           "unidade": "kg",
-          "consumo_total": 5624.999999999999
+          "consumo_total": 10106.099999999999
         },
         {
           "nome": "Ureia (cobertura)",
           "dose_por_metro": 0.0625,
           "unidade": "kg",
-          "consumo_total": 1562.5
+          "consumo_total": 2807.25
         }
       ]
     }

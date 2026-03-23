@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "executions": [
+    {
+      "generated_at": "2026-03-22T22:57:34Z",
+      "source_file": "data/registros.json",
+      "input_count": 1,
+      "overall": {
+        "area_total": {
+          "n": 1,
+          "mean": 125500,
+          "sd": null
+        },
+        "quantidade_ruas": {
+          "n": 1,
+          "mean": 50,
+          "sd": null
+        },
+        "comprimento_total_ruas": {
+          "n": 1,
+          "mean": 25000,
+          "sd": null
+        },
+        "area_por_metro_rua": {
+          "n": 1,
+          "mean": 5,
+          "sd": null
+        }
+      },
+      "by_culture": {
+        "milho": {
+          "area_total": {
+            "n": 1,
+            "mean": 125500,
+            "sd": null
+          },
+          "quantidade_ruas": {
+            "n": 1,
+            "mean": 50,
+            "sd": null
+          },
+          "comprimento_total_ruas": {
+            "n": 1,
+            "mean": 25000,
+            "sd": null
+          },
+          "area_por_metro_rua": {
+            "n": 1,
+            "mean": 5,
+            "sd": null
+          }
+        }
+      }
+    }
+  ]
+}
