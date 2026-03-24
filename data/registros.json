@@ -4,19 +4,6 @@
     {
       "cultura": "milho",
       "forma": "retangulo",
-      "dimensao_a": 500.0,
-      "dimensao_b": 300.0,
-      "largura_rua": 3.0,
-      "espacamento": 1.0,
-      "area_total": 113000.0,
-      "quantidade_ruas": 75,
-      "comprimento_total_ruas": 37500.0,
-      "area_por_metro_rua": 3.0,
-      "insumos": []
-    },
-    {
-      "cultura": "milho",
-      "forma": "retangulo",
       "dimensao_a": 450.0,
       "dimensao_b": 200.0,
       "largura_rua": 4.0,
@@ -107,6 +94,70 @@
           "dose_por_metro": 0.0625,
           "unidade": "kg",
           "consumo_total": 2807.25
+        }
+      ]
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 300.0,
+      "dimensao_b": 200.0,
+      "largura_rua": 2.0,
+      "espacamento": 1.0,
+      "area_total": 40200.0,
+      "quantidade_ruas": 67,
+      "comprimento_total_ruas": 20100.0,
+      "area_por_metro_rua": 2.0,
+      "insumos": [
+        {
+          "nome": "Semente de milho hibrido",
+          "dose_por_metro": 11.0,
+          "unidade": "sementes",
+          "consumo_total": 221100.0
+        },
+        {
+          "nome": "Fertilizante NPK 04-14-08",
+          "dose_por_metro": 0.09,
+          "unidade": "kg",
+          "consumo_total": 1809.0
+        },
+        {
+          "nome": "Ureia (cobertura)",
+          "dose_por_metro": 0.025,
+          "unidade": "kg",
+          "consumo_total": 502.5
+        }
+      ]
+    },
+    {
+      "cultura": "milho",
+      "forma": "retangulo",
+      "dimensao_a": 300.0,
+      "dimensao_b": 200.0,
+      "largura_rua": 5.0,
+      "espacamento": 1.0,
+      "area_total": 50400.0,
+      "quantidade_ruas": 33,
+      "comprimento_total_ruas": 9900.0,
+      "area_por_metro_rua": 5.0,
+      "insumos": [
+        {
+          "nome": "Semente de milho hibrido",
+          "dose_por_metro": 27.5,
+          "unidade": "sementes",
+          "consumo_total": 272250.0
+        },
+        {
+          "nome": "Fertilizante NPK 04-14-08",
+          "dose_por_metro": 0.22499999999999998,
+          "unidade": "kg",
+          "consumo_total": 2227.5
+        },
+        {
+          "nome": "Ureia (cobertura)",
+          "dose_por_metro": 0.0625,
+          "unidade": "kg",
+          "consumo_total": 618.75
         }
       ]
     }
